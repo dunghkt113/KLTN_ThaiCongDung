@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Adminassets/images/logo/favicon.png">
+
+    <!-- page css -->
+    <link href="~/Adminassets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!-- Core css -->
+    <link href="~/Adminassets/css/app.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="app">
+        <div class="layout">
+            <!-- Header START -->
+            <div class="header">
+                <div class="logo logo-dark">
+                    <a href="/admin">
+                        <img src="~/Adminassets/images/logo/logo.png" alt="Logo">
+                        <img class="logo-fold" src="~/Adminassets/images/logo/logo-fold.png" alt="Logo">
+                    </a>
+                </div>
+                <div class="logo logo-white">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index>
+                        <img src="~/Adminassets/images/logo/logo-white.png" alt="Logo">
+                        <img class="logo-fold" src="~/Adminassets/images/logo/logo-fold-white.png" alt="Logo">
+                    </a>
+                </div>
+                <div class="nav-wrap">
+                    <ul class="nav-left">
+                        
+
+                    </ul>
+                    <ul class="nav-right">
+                        <li class="dropdown dropdown-animated scale-left">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>Xin chào: @User.Identity.Name</li>
+                                <li><a class="dropdown-item" href="/dang-xuat-admin.html">
+                                <i class="anticon anticon-lock"></i>Đăng xuất</a></li>}
+                            </li>
+                        </ul>
+                </div>
+                <i class="anticon font-size-10 anticon-right"></i>
+            </div>
+            </a>
+        </div>
+        </li>
+
+        </ul>
+    </div>
+    </div>
+    <!-- Header END -->
+    <!-- Side Nav START -->
+
+
+    @await Html.PartialAsync("_SideNavPartialView.cshtml")
+    <!-- Side Nav END -->
+    <!-- Page Container START -->
+    <div class="page-container">
+
+        <!-- Content Wrapper START -->
+        <div class="main-content">
+            @RenderBody()
+        </div>
+        <!-- Content Wrapper END -->
+        <!-- Footer START -->
+        <footer class="footer">
+            <div class="footer-content">
+
+
+            </div>
+        </footer>
+        <!-- Footer END -->
+
+    </div>
+    <!-- Page Container END -->
+    </div>
+    </div>
+
+
+    <!-- Core Vendors JS -->
+    <script src="~/Adminassets/js/vendors.min.js"></script>
+
+    <!-- page js -->
+    <script src="~/Adminassets/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/Adminassets/js/pages/dashboard-e-commerce.js"></script>
+
+    <!-- Core JS -->
+    <script src="~/Adminassets/js/app.min.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

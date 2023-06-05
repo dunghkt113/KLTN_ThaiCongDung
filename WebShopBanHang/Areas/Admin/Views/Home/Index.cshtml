@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewData["Title"] = "admin";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var currentMonth = DateTime.Now.Month; 
+}
+
+
+
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="media align-items-center">
+                    <div class="avatar avatar-icon avatar-lg avatar-blue">
+                        <i class="anticon anticon-dollar"></i>
+                    </div>
+                    <div class="m-l-15">
+                        <h2 class="m-b-0">@ViewBag.ThongKeTongDoanhThu.ToString("#,##0") VNĐ</h2>
+                        <p class="m-b-0 text-muted">Doanh thu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="media align-items-center ">
+                    <div class="avatar avatar-icon avatar-lg avatar-gold">
+                        <i class="anticon anticon-profile"></i>
+                    </div>
+                    <div class="m-l-15">
+                        <h2 class="m-b-0">@ViewBag.ThongKeDonDatHang</h2>
+                        <p class="m-b-0 text-muted">Đơn hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="media align-items-center ">
+                <div class="fas fa-cart-plus">
+                </div>
+                <div class="m-l-15">
+                    <h2 class="m-b-0">@ViewBag.ThongKeDonDatHangMoi</h2>
+                    <p class="m-b-0 text-muted">Đơn hàng mới</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="media align-items-center">
+                    <div class="avatar avatar-icon avatar-lg avatar-purple">
+                        <i class="anticon anticon-user"></i>
+                    </div>
+                    <div class="m-l-15">
+                        <h2 class="m-b-0">@ViewBag.ThongKeKhachHang</h2>
+                        <p class="m-b-0 text-muted">Khách hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="text-align:center; color:#688d0d; font-size: 30px">
+    Truy thu doanh số
+</div>
+<form>
+    <div class="row">
+
+        <div class="col">
+            <input type="date" id="txtstart" class="form-control" placeholder="Ngày bắt đầu">
+        </div>
+        <div class="col">
+            <input type="date" id="txtstop" class="form-control" placeholder="Ngày kết thúc">
+        </div>
+    </div>
+    <button type="submit" id="btnSubmit" class="btn btn-primary">Thống kê</button>
+    <h1 id="result">0 VNĐ</h1>
+</form>
+<div style="text-align:center; color:#688d0d; font-size: 30px">
+    Thống kê sản phẩm bán ra
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <select id="ddlMonth" class="form-control" style="width: 150px;">
+            <option value="0">Chọn tháng</option>
+            @for (var i = 1; i < 13; i++)
+            {
+                if (i == currentMonth)
+                {
+                    <option value="@i" selected>Tháng @i</option>
+                }
+                else
+                {
+                    <option value="@i">Tháng @i</option>               
+                }
+            }
+        </select>
+    </div>
+    <canvas id="chartProduct"></canvas>
+</div>
+
+@section Scripts {
+    <script src="~/AdminAssets/js/ChartJs.js"></script>
+    <script>$(document).ready(function () {
+            $("#btnSubmit").click(function (e) {
+                e.preventDefault();
+
+                var ngaybatdau = $("#txtstart").val();
+                var ngayketthuc = $("#txtstop").val();
+                $.ajax({
+                    url: '/Admin/Home/ThongKe/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { datestart: ngaybatdau, datestop: ngayketthuc },
+                    success: function (results) {
+
+                        $("#result").html("");
+                        $("#result").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+            $('#ddlMonth').trigger('change');
+        });
+
+        $('#ddlMonth').on('change', function () {
+            var month = $(this).val();
+
+            $.get('/Admin/Home/GetReportByMonth?month=' + month, function (resp) {
+                console.log(resp);
+                var labels = resp.map(x => x.productName);
+                var datasets = [];
+                datasets.push({
+                    label: "Sản phẩm",
+                    backgroundColor: '#0b9663',
+                    borderWidth: 1,
+                    data: resp.map(x => x.total)
+                });
+                RegisterChartProduct(labels, datasets);
+            });
+        });
+
+        // RegisterChartProduct();
+        var myBarChart;
+
+        function RegisterChartProduct(labels, datasets) {
+            var ctx = document.getElementById('chartProduct');
+
+            if (myBarChart) {
+                myBarChart.destroy();
+            }
+
+            var barChartData = {
+                labels: labels, // ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'],
+                datasets: datasets
+                //datasets: [{
+            };
+
+             myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+
+            });
+        }</script>
+
+}
+
+
+
+
+

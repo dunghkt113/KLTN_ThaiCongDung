@@ -1,0 +1,147 @@
+﻿@model WebShopBanHang.Models.Product
+
+@{ ViewData["Title"] = "Thông tin sản phẩm" + Model.ProductName;
+                Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Danh sách sản phẩm</a>
+            <span class="breadcrumb-item active">Thông tin sản phẩm : @Model.ProductName</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin sản phẩm : @Model.ProductName</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-danger font-weight-semibold">@Model.ProductId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên sản phẩm:</td>
+                        <td>@Model.ProductName</td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả ngắn:</td>
+                        <td>@Model.ShortDesc</td>
+                    </tr>
+                    <tr>
+                        <td>Gía bán:</td>
+                        <td>@Model.Price.ToString("#,##0") VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td>Sales:</td>
+                        <td>@Model.Discount</td>
+                    </tr>
+                    <tr>
+                        <td>Kích hoạt:</td>
+                        <td>
+                            @if (Model.Active)
+                            {
+                <div class="switch m-r-10">
+                    <input type="checkbox" id="switch-1" checked="" disabled />
+                    <label for="switch-1"></label>
+                </div> }
+            else
+            {
+<div class="switch m-r-10">
+    <input type="checkbox" id="switch-2" disabled />
+    <label for="switch-2"></label>
+</div>}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hiện thị trang chủ:</td>
+                        <td>
+                            @if (Model.HomeFlag)
+                            {
+                <div class="switch m-r-10">
+                    <input type="checkbox" id="switch-1" checked="" disabled />
+                    <label for="switch-1"></label>
+                </div> }
+            else
+            {
+<div class="switch m-r-10">
+    <input type="checkbox" id="switch-2" disabled />
+    <label for="switch-2"></label>
+</div>}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Ngày tạo:</td>
+                        <td>@Model.DateCreated</td>
+                    </tr>
+                    <tr>
+                        <td>Ngày sửa:</td>
+                        <td>@Model.DateModified</td>
+                    </tr>
+                    <tr>
+                        <td>Tiêu đề:</td>
+                        <td>@Model.Title</td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh đại diện:</td>
+                        <td>
+                            <img width="250" height="250" src="~/images/products/@Model.Thumb" alt="@Model.Title" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mô tả:</td>
+                        <td>@Model.Description</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-body">
+            <a class="btn btn-success btn-tone m-r-5" asp-action="Index">Trở Lại</a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/addCart.js"></script>
+    <script>$(document).ready(function () {
+            $(function () {
+                $(".add-to-cart").click(function () {
+                    var productid = $('#ProductId').val();
+                    var soLuong = $('#txtsoLuong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productID: productid,
+                            amount: soLuong
+                        },
+                        success: function (response) {
+                            if (response.result == 'Redirect') {
+                                window.location = response.url;
+                            }
+                            else {
+                                loadHeaderCart(); //Add Product success
+                                location.reload();
+                            }
+                            console.log(response); // log to the console to see whether it worked
+                        },
+                        error: function (error) {
+                            alert("There was an error posting the data to the server: " + error.responseText);
+                        }
+                    });
+                });
+
+
+            });
+            function loadHeaderCart() {
+                $('#miniCart').load("/AjaxContent/HeaderCart");
+                $('#numberCart').load("/AjaxContent/NumberCart");
+            }
+        });</script>
+
+}

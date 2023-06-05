@@ -1,0 +1,55 @@
+﻿@model WebShopBanHang.ModelView.MuaHangSuccessVM
+@{ ViewData["Title"] = "Mua hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<WebShopBanHang.ModelView.CartItem> Carts = ViewBag.Giohang;
+
+}
+
+<main class="main-content">
+
+    <div class="checkout-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="your-order">
+                        <h3>Đặt hàng thành công</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    
+
+
+                                    <div class="col-md-12">
+                                    <tr>
+                                        
+                                        <div>
+                                            <label>Cảm ơn bạn đã đặt hàng!</label>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <div>
+                                            <h5><i class="fa fa-angle-double-right" aria-hidden="true"></i>Thông tin người nhận</h5>
+                                        </div>
+                                      
+                                        <div>
+                                            <label>Tên người nhận: @Model.FullName</label>
+                                        </div>
+                                        
+                                        <div>
+                                            <label>Số điện thoại: @Model.Phone</label>
+                                        </div>
+                                        <div>
+                                            <label>Địa chỉ: @Model.Address</label>
+                                        </div>
+                                    </tr>
+                                    
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,104 @@
+﻿@model WebShopBanHang.ModelView.HomeViewVM
+@{ ViewData["Title"] = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Product> allProduct = ViewBag.allProduct; 
+ }
+
+
+
+@if (Model.Banners != null && Model.Banners.Count > 0)
+{
+<div class="slider-area">
+    <!-- Main Slider -->
+    <div class="swiper-container main-slider-2 swiper-arrow with-bg_white">
+        <div class="swiper-wrapper">
+            @foreach (var item in Model.Banners)
+            {
+                <div class="swiper-slide animation-style-01">
+                    <div class="slide-inner bg-height" data-bg-image="images/banner/@item.Image">
+                    </div>
+                </div>          
+            }
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination with-bg d-md-none"></div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>
+}
+
+
+
+<div class="shipping-area section-space-top-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="shipping-item">
+                    <div class="shipping-img">
+                        <img src="~/assets/images/shipping/icon/plane.png" alt="Shipping Icon">
+                    </div>
+                    <div class="shipping-content">
+                        <h5 class="title">Giao hàng</h5>
+                        <p class="short-desc mb-0">Miễn phí vận chuyển</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
+                <div class="shipping-item">
+                    <div class="shipping-img">
+                        <img src="~/assets/images/shipping/icon/earphones.png" alt="Shipping Icon">
+                    </div>
+                    <div class="shipping-content">
+                        <h5 class="title">Hỗ trợ</h5>
+                        <p class="short-desc mb-0">Hỗ trợ tận tình</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pt-6 pt-lg-0">
+                <div class="shipping-item">
+                    <div class="shipping-img">
+                        <img src="~/assets/images/shipping/icon/shield.png" alt="Shipping Icon">
+                    </div>
+                    <div class="shipping-content">
+                        <h5 class="title">Thanh toán</h5>
+                        <p class="short-desc mb-0">Thanh toán khi nhận hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shipping Area End Here -->
+<!-- Begin Product Area -->
+<div class="product-area section-space-top-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center pb-55">
+                    <span class="sub-title text-primary">Bạn có thể quan tâm</span>
+                    <h2 class="title mb-0">SẢN PHẨM MỚI</h2>
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="all-items" role="tabpanel" aria-labelledby="all-items-tab">
+                        @await Html.PartialAsync("_ListProductPartialViews", allProduct)
+                    </div>
+                    @foreach (var item in Model.Products)
+                    {
+                    <div class="tab-pane fade" id="@item.category.Alias" role="tabpanel" aria-labelledby="fresh-fruits-tab">
+                        @await Html.PartialAsync("_ListProductPartialViews", item.lsProduct)
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/addCart.js"></script>
+}
+<!-- Product Area End Here -->
+<!-- Begin Blog Area -->

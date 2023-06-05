@@ -1,0 +1,200 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<WebShopBanHang.Models.Product>
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách sản phẩm " + CurrentPage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int PageNext = CurrentPage + 1;
+    Category category = ViewBag.CurrentCat;
+}
+
+
+<!-- Begin Main Content Area -->
+<main class="main-content"
+    <div class="shop-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 order-lg-1 order-2 pt-10 pt-lg-0">
+                    <div class="sidebar-area">
+                        <div class="widgets-searchbox mb-9">
+
+                        </div>
+                        <div class="widgets-area mb-9">
+                            
+                            <div class="col-lg-9">
+                                <ul class="nav myaccount-tab-trigger" id="account-page-tab" style="width:240px;" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" role="tab" aria-selected="true">Danh Mục Sản Phẩm</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" style="border: 1px solid #3c9add;" href="/Product" role="tab" aria-selected="true">Tất Cả</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" style="border: 1px solid #3c9add;" href="/dien-thoai" role="tab" aria-selected="true">Điện Thoại</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" style="border: 1px solid #3c9add;" href="/Laptop" role="tab" aria-selected="true">Laptop</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" style="border: 1px solid #3c9add;" href="/Tai-nghe" role="tab" aria-selected="true">Tai Nghe</a>
+                                    </li>
+                                    
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-9 order-lg-2 order-1">
+                    <div class="product-topbar">
+                        <ul>
+                            <li class="product-view-wrap">
+                                <ul class="nav" role="tablist">
+                                    <li class="grid-view" role="presentation">
+                                        <a class="active" id="grid-view-tab" data-bs-toggle="tab" href="#grid-view" role="tab" aria-selected="true">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-view" role="presentation">
+                                        <a id="list-view-tab" data-bs-toggle="tab" href="#list-view" role="tab" aria-selected="true">
+                                            <i class="fa fa-th-list"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="short">
+                                <select class="nice-select wide rounded-0">
+                                    <option value="">Thứ tự</option>
+                                    <option value=""><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">Tăng dần</a></option>
+                                    <option value=""><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm1"]">Giảm giá</a></option>
+
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content text-charcoal pt-8">
+                        <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
+                            <div class="product-grid-view row">
+
+
+                                @if(Model!=null && Model.Count()>0)
+                                            {
+                                                foreach(var item in Model)
+                                                {
+                                                    string url = $"{item.Alias}-{item.ProductId}.html";
+
+                            <div class="col-lg-4 col-sm-6 pt-6 pt-sm-0" >
+                                <div class="product-item">
+                                    <div class="product-img img-zoom-effect" style="height:262px">
+                                        <a href="@url">
+                                            <img class="img-full" src="~/images/products/@item.Thumb" alt="@item.Title">
+                                        </a>
+                                        <div class="product-add-action">
+                                            <ul>
+                                                <li>
+                                                    <a href="cart.html">
+                                                        <i class="pe-7s-cart"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="compare.html">
+                                                        <i class="pe-7s-shuffle"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="wishlist.html">
+                                                        <i class="pe-7s-like"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-content">
+                                        <a class="product-name" href="@url">@item.ProductName</a>
+                                        <div class="price-box pb-1">
+                                            <span class="new-price">@item.Price.ToString("#,##0") VNĐ</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
+                            <div class="product-list-view row">
+                                @if (Model != null && Model.Count() > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                             string url = $"{item.Alias}-{item.ProductId}.html";
+
+                                        <div class="col-12">
+                                            <div class="product-item">
+                                                <div class="product-img img-zoom-effect">
+                                                    <a href="single-product.html">
+                                                        <img class="img-full" src="~/images/products/@item.Thumb" alt="@url">
+                                                    </a>
+                                                    <div class="product-add-action">
+                                                        <ul>
+                                                            <li>
+                                                                <a href="cart.html">
+                                                                    <i class="pe-7s-cart"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="compare.html">
+                                                                    <i class="pe-7s-shuffle"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="wishlist.html">
+                                                                    <i class="pe-7s-like"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content align-self-center">
+                                                    <a class="product-name pb-2" href="@url">Black Peppepr Read</a>
+                                                    <div class="price-box pb-1">
+                                                        <span class="new-price">@item.Price</span>
+                                                    </div>
+                                                    <div class="rating-box pb-2">
+                                                        <ul>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                        </ul>
+                                                    </div>
+                                                    <p class="short-desc mb-0">@item.ShortDesc</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination-area pt-10">
+                        <ul class="pagination justify-content-center">
+                            <pager class="pager-container" list="@Model" asp-area="" asp-controller="Product" asp-route-CatID="@ViewBag.CurrentCateID"  />
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Main Content Area End Here -->

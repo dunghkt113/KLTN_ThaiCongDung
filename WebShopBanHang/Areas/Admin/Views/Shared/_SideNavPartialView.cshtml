@@ -1,0 +1,96 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="side-nav">
+        <div class="side-nav-inner">
+            <ul class="side-nav-menu scrollable">
+                <li class="nav-item">
+                    <a class="dropdown-toggle" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-dashboard"></i>
+                        </span>
+                        <span class="title">Dashboard</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminOrders" asp-action="Index">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-appstore"></i>
+                        </span>
+                        <span class="title">Quản Lý Đơn Hàng</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="dropdown-toggle" asp-area="Admin" asp-area="AdminProducts" asp-controller="AdminProducts" asp-action="Index">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-build"></i>
+                        </span>
+                        <span class="title">Quản Lý Sản Phẩm</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-hdd"></i>
+                        </span>
+                        <span class="title">Danh sách khách hàng</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle" href="javascript:void(0);">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-table"></i>
+                        </span>
+                        <span class="title">Quản Lý Hệ THống</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">Quản Lý Tài Khoản</a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Quản Lý Danh Mục</a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Quản Lý Quyền Truy Cập</a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminBanners" asp-action="Index">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-pie-chart"></i>
+                        </span>
+                        <span class="title">Quản Lý Banner</span>
+                        <span class="arrow">
+                            <i class="arrow-icon"></i>
+                        </span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+}

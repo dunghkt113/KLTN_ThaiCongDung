@@ -1,0 +1,38 @@
+﻿@model WebShopBanHang.Areas.Admin.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-area="Admin" asp-controller="Account" asp-action="Login" method="post">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between m-b-30">
+
+                <h2 class="login-title">ĐĂNG NHẬP</h2>
+            </div>
+            <p>@ViewBag.Error</p>
+            <div class="form-group">
+                <label class="font-weight-semibold" for="email">Email:</label>
+                <div class="input-affix">
+                    <i class="prefix-icon anticon anticon-user"></i>
+                    <input asp-for="Email" type="text" class="form-control" id="userName" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-semibold" for="password">Password:</label>
+                <div class="input-affix m-b-10">
+                    <i class="prefix-icon anticon anticon-lock"></i>
+                    <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between">
+                    <button class="btn btn-primary">Đăng nhập</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
